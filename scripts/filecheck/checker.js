@@ -5,20 +5,16 @@ import os from "node:os";
 import { eachLimit } from "async";
 import cliProgress from "cli-progress";
 import { fdir } from "fdir";
-import fse from "fs-extra";
-import { temporaryDirectory } from "tempy";
 import * as cheerio from "cheerio";
 import { fileTypeFromFile } from "file-type";
-import imagemin from "imagemin";
-import imageminPngquant from "imagemin-pngquant";
-import imageminMozjpeg from "imagemin-mozjpeg";
-import imageminGifsicle from "imagemin-gifsicle";
-import imageminSvgo from "imagemin-svgo";
+import sharp from "sharp";
+import { optimize } from "svgo";
 import isSvg from "is-svg";
 
 import { MAX_FILE_SIZE } from "./env.js";
 import {
   MAX_COMPRESSION_DIFFERENCE_PERCENTAGE,
+  JPEG_QUALITY,
   AUDIO_EXT,
   VIDEO_EXT,
   FONT_EXT,
@@ -185,16 +181,13 @@ export async function checkFile(filePath, options = {}) {
     }
   }
 
-  // The image has to be mentioned in the adjacent index.html document
+  // The image has to be mentioned in the adjacent index.md document
   const parentPath = path.dirname(filePath);
-  const htmlFilePath = path.join(parentPath, "index.html");
-  const mdFilePath = path.join(parentPath, "index.md");
-  const docFilePath = (await fse.exists(htmlFilePath))
-    ? htmlFilePath
-    : (await fse.exists(mdFilePath))
-      ? mdFilePath
-      : null;
-  if (!docFilePath) {
+  const docFilePath = path.join(parentPath, "index.md");
+  let rawContent;
+  try {
+    rawContent = await fs.readFile(docFilePath, "utf-8");
+  } catch {
     throw new FixableError(
       `${getRelativePath(
         filePath,
@@ -204,9 +197,6 @@ export async function checkFile(filePath, options = {}) {
   }
 
   // The image must be mentioned (as a string) in the content
-  const rawContent = docFilePath
-    ? await fs.readFile(docFilePath, "utf-8")
-    : null;
   if (!rawContent.includes(path.basename(filePath))) {
     throw new FixableError(
       `${getRelativePath(
@@ -229,88 +219,75 @@ export async function checkFile(filePath, options = {}) {
  * @returns {Promise<void>}
  */
 async function checkCompression(filePath, options) {
-  const tempdir = temporaryDirectory();
   const extension = path.extname(filePath).toLowerCase();
-  try {
-    /** @type {import('imagemin').Plugin[]} */
-    const plugins = [];
+  if (![".jpg", ".jpeg", ".png", ".gif", ".svg"].includes(extension)) {
+    return;
+  }
+
+  const input = await fs.readFile(filePath);
+  let compressed;
+  if (extension === ".svg") {
+    compressed = Buffer.from(
+      optimize(input.toString(), { path: filePath }).data,
+    );
+  } else {
+    const image = sharp(input, { animated: true });
+    // Metadata is stripped, so write the orientation back to keep it exact.
+    const { orientation } = await image.metadata();
+    if (orientation && orientation !== 1) {
+      image.withExif({ IFD0: { Orientation: String(orientation) } });
+    }
     if (extension === ".jpg" || extension === ".jpeg") {
-      plugins.push(imageminMozjpeg());
+      image.jpeg({ quality: JPEG_QUALITY, mozjpeg: true });
     } else if (extension === ".png") {
-      plugins.push(imageminPngquant());
+      image.png({ palette: true, compressionLevel: 9 });
     } else if (extension === ".gif") {
-      plugins.push(imageminGifsicle());
-    } else if (extension === ".svg") {
-      plugins.push(imageminSvgo());
+      // Never reuse a frame's palette for the next frame, to keep frames exact.
+      image.gif({ interPaletteMaxError: 0 });
     }
+    compressed = await image.toBuffer();
+  }
+  const sizeBefore = input.length;
+  const sizeAfter = compressed.length;
+  const reductionPercentage = 100 - (100 * sizeAfter) / sizeBefore;
 
-    if (!plugins.length) {
-      return;
-    }
+  const formattedBefore = formatSize(sizeBefore);
+  const formattedMax = formatSize(MAX_FILE_SIZE);
+  const formattedAfter = formatSize(sizeAfter);
 
-    const files = await imagemin([filePath], {
-      destination: tempdir,
-      plugins,
-      // Needed because otherwise start trying to find files using
-      // `globby()` which chokes on file paths that contain brackets.
-      // E.g. `/web/css/transform-function/rotate3d()/transform.png`
-      // Setting this to false tells imagemin() to just accept what
-      // it's given instead of trying to search for the image.
-      glob: false,
-    });
-    if (!files.length) {
-      throw new Error(`${filePath} could not be compressed`);
-    }
-    const compressed = files[0];
-    const [sizeBefore, sizeAfter] = (
-      await Promise.all([
-        fs.stat(filePath),
-        fs.stat(compressed.destinationPath),
-      ])
-    ).map((s) => s.size);
-    const reductionPercentage = 100 - (100 * sizeAfter) / sizeBefore;
+  if (sizeAfter > MAX_FILE_SIZE) {
+    throw new Error(
+      `${getRelativePath(
+        filePath,
+      )} is too large (${formattedBefore} > ${formattedMax}), even after compressing to ${formattedAfter}.`,
+    );
+  } else if (!options.saveCompression && sizeBefore > MAX_FILE_SIZE) {
+    throw new FixableError(
+      `${getRelativePath(
+        filePath,
+      )} is too large (${formattedBefore} > ${formattedMax}), but can be compressed to ${formattedAfter}.`,
+      `npm run filecheck '${getRelativePath(filePath)}' -- --save-compression`,
+    );
+  }
 
-    const formattedBefore = formatSize(sizeBefore);
-    const formattedMax = formatSize(MAX_FILE_SIZE);
-    const formattedAfter = formatSize(sizeAfter);
-
-    // this check should only be done if we want to save the compressed file
-    if (sizeAfter > MAX_FILE_SIZE) {
-      throw new Error(
-        `${getRelativePath(
-          filePath,
-        )} is too large (${formattedBefore} > ${formattedMax}), even after compressing to ${formattedAfter}.`,
+  if (reductionPercentage > MAX_COMPRESSION_DIFFERENCE_PERCENTAGE) {
+    if (options.saveCompression) {
+      console.log(
+        `Compressed ${filePath}. New file is ${reductionPercentage.toFixed(
+          0,
+        )}% smaller.`,
       );
-    } else if (!options.saveCompression && sizeBefore > MAX_FILE_SIZE) {
+      await fs.writeFile(filePath, compressed);
+    } else {
       throw new FixableError(
-        `${getRelativePath(
-          filePath,
-        )} is too large (${formattedBefore} > ${formattedMax}), but can be compressed to ${formattedAfter}.`,
+        `${filePath} is ${formatSize(
+          sizeBefore,
+        )} and can be compressed to ${formatSize(
+          sizeAfter,
+        )} (${reductionPercentage.toFixed(0)}%)`,
         `npm run filecheck '${getRelativePath(filePath)}' -- --save-compression`,
       );
     }
-
-    if (reductionPercentage > MAX_COMPRESSION_DIFFERENCE_PERCENTAGE) {
-      if (options.saveCompression) {
-        console.log(
-          `Compressed ${filePath}. New file is ${reductionPercentage.toFixed(
-            0,
-          )}% smaller.`,
-        );
-        fse.copyFileSync(compressed.destinationPath, filePath);
-      } else {
-        throw new FixableError(
-          `${filePath} is ${formatSize(
-            sizeBefore,
-          )} and can be compressed to ${formatSize(
-            sizeAfter,
-          )} (${reductionPercentage.toFixed(0)}%)`,
-          `npm run filecheck '${getRelativePath(filePath)}' -- --save-compression`,
-        );
-      }
-    }
-  } finally {
-    fse.removeSync(tempdir);
   }
 }
 

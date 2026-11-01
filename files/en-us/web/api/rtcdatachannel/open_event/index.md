@@ -14,11 +14,15 @@ This event is not cancelable and does not bubble.
 
 ## Syntax
 
-Use the event name in methods like {{domxref("EventTarget.addEventListener", "addEventListener()")}}, or set an event handler property.
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
 
 ```js-nolint
 addEventListener("open", (event) => { })
+```
 
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
 onopen = (event) => { }
 ```
 
@@ -27,13 +31,6 @@ onopen = (event) => { }
 An {{domxref("RTCDataChannelEvent")}}. Inherits from {{domxref("Event")}}.
 
 {{InheritanceDiagram("RTCDataChannelEvent")}}
-
-## Event properties
-
-_Also inherits properties from its parent interface, {{DOMxRef("Event")}}._
-
-- {{DOMxRef("RTCDataChannelEvent.channel", "channel")}} {{ReadOnlyInline}}
-  - : Returns the {{domxref("RTCDataChannel")}} associated with the event.
 
 ## Examples
 
@@ -50,7 +47,7 @@ dc.addEventListener("open", (ev) => {
 });
 ```
 
-This can also be done by directly setting the value of the channel's `onopen` event handler property.
+This can also be done by directly setting the value of the channel's `onopen` event handler property (but note that this replaces other event listeners added using `onopen`, if any).
 
 ```js
 dc.onopen = (ev) => {

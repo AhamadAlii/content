@@ -18,11 +18,15 @@ This enables performance improvements by allowing the browser to draw only the v
 
 ## Syntax
 
-Use the event name in methods like {{domxref("EventTarget.addEventListener", "addEventListener()")}}, or set an event handler property.
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
 
 ```js-nolint
 addEventListener("visibilitymaskchange", (event) => { })
+```
 
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
 onvisibilitymaskchange = (event) => { }
 ```
 
@@ -31,21 +35,6 @@ onvisibilitymaskchange = (event) => { }
 An {{domxref("XRVisibilityMaskChangeEvent")}}. Inherits from {{domxref("Event")}}.
 
 {{InheritanceDiagram("XRVisibilityMaskChangeEvent")}}
-
-## Event properties
-
-_In addition to the properties listed below, properties from the parent interface, {{domxref("Event")}}, are available._
-
-- {{domxref("XRVisibilityMaskChangeEvent.eye", "eye")}} {{ReadOnlyInline}}
-  - : The eye the mask applies to.
-- {{domxref("XRVisibilityMaskChangeEvent.index", "index")}} {{ReadOnlyInline}}
-  - : The index of the current {{domxref("XRView")}} in the {{domxref("XRViewerPose.views")}} array.
-- {{domxref("XRVisibilityMaskChangeEvent.indices", "indices")}} {{ReadOnlyInline}}
-  - : An array of indices specifying the vertices in the `vertices` array that should be drawn to display the currently visible part of the scene displayed in the `XRView`. If this array is empty, the whole region of the `XRView` will be drawn.
-- {{domxref("XRVisibilityMaskChangeEvent.session", "session")}} {{ReadOnlyInline}}
-  - : The {{domxref("XRSession")}} to which the event refers.
-- {{domxref("XRVisibilityMaskChangeEvent.vertices", "vertices")}} {{ReadOnlyInline}}
-  - : An array of coordinates representing the vertices required to draw the entire scene displayed in the `XRView`. If this array is empty, the whole region of the `XRView` will be drawn.
 
 ## Examples
 

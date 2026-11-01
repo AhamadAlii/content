@@ -301,17 +301,43 @@
       "overview": ["CSS Typed OM API"],
       "guides": ["/docs/Web/API/CSS_Typed_OM_API/Guide"],
       "interfaces": [
-        "CSSKeywordValue",
         "CSSImageValue",
+        "CSSKeywordValue",
+        "CSSMathClamp",
+        "CSSMathInvert",
+        "CSSMathMax",
+        "CSSMathMin",
+        "CSSMathNegate",
+        "CSSMathProduct",
+        "CSSMathSum",
+        "CSSMathValue",
+        "CSSMatrixComponent",
+        "CSSNumericArray",
         "CSSNumericValue",
-        "CSSStyleValue",
+        "CSSPerspective",
         "CSSPositionValue",
+        "CSSRotate",
+        "CSSScale",
+        "CSSSkew",
+        "CSSSkewX",
+        "CSSSkewY",
+        "CSSStyleValue",
+        "CSSTransformComponent",
         "CSSTransformValue",
+        "CSSTranslate",
+        "CSSUnitValue",
         "CSSUnparsedValue",
-        "StylePropertyMap"
+        "CSSVariableReferenceValue",
+        "StylePropertyMap",
+        "StylePropertyMapReadOnly"
       ],
-      "methods": [],
-      "properties": [],
+      "methods": ["Element.computedStyleMap", "CSS.factory_functions_static"],
+      "properties": [
+        "HTMLElement.attributeStyleMap",
+        "SVGElement.attributeStyleMap",
+        "MathMLElement.attributeStyleMap",
+        "CSSStyleRule.styleMap"
+      ],
       "events": []
     },
     "CSSOM": {
@@ -737,20 +763,7 @@
         "/docs/Web/API/CSS_Typed_OM_API/Guide",
         "/docs/Web/API/CSS_Painting_API/Guide"
       ],
-      "interfaces": [
-        "CSSImageValue",
-        "CSSKeywordValue",
-        "CSSMathValue",
-        "CSSNumericValue",
-        "CSSPositionValue",
-        "CSSStyleValue",
-        "CSSTransformValue",
-        "CSSUnitValue",
-        "CSSUnparsedValue",
-        "PaintWorkletGlobalScope",
-        "StylePropertyMap",
-        "Worklet"
-      ],
+      "interfaces": ["PaintWorkletGlobalScope", "Worklet"],
       "methods": ["CSS.registerProperty_static", "Worklet.addModule"],
       "properties": [],
       "events": []
@@ -1099,8 +1112,6 @@
         "MediaStreamTrack",
         "MediaStreamTrackEvent",
         "MediaTrackConstraints",
-        "MediaTrackSettings",
-        "MediaTrackSupportedConstraints",
         "OverconstrainedError"
       ],
       "methods": [
@@ -1177,6 +1188,17 @@
       "properties": ["Navigator.connection", "WorkerNavigator.connection"],
       "events": []
     },
+    "Observable API": {
+      "overview": ["Observable API"],
+      "guides": [
+        "/docs/Web/API/Observable_API/Using_observables",
+        "/docs/Web/API/Observable_API/Creating_observables"
+      ],
+      "interfaces": ["Observable", "Subscriber"],
+      "methods": ["EventTarget.when()"],
+      "properties": [],
+      "events": []
+    },
     "Page Visibility API": {
       "overview": ["Page Visibility API"],
       "interfaces": [],
@@ -1218,12 +1240,14 @@
       ],
       "interfaces": [
         "EventCounts",
+        "InteractionContentfulPaint",
         "LargestContentfulPaint",
         "LayoutShift",
         "LayoutShiftAttribution",
         "NotRestoredReasons",
         "NotRestoredReasonDetails",
         "Performance",
+        "PerformanceContainerTiming",
         "PerformanceEntry",
         "PerformanceElementTiming",
         "PerformanceEventTiming",
@@ -1239,6 +1263,7 @@
         "PerformanceResourceTiming",
         "PerformanceScriptTiming",
         "PerformanceServerTiming",
+        "PerformanceSoftNavigation",
         "PerformanceTiming",
         "TaskAttributionTiming",
         "VisibilityStateEntry"
@@ -1414,6 +1439,19 @@
       "properties": ["HTMLIFrameElement.privateToken"],
       "events": []
     },
+    "Prompt API": {
+      "overview": ["Prompt API"],
+      "guides": [
+        "/docs/Web/API/Prompt_API/Using",
+        "/docs/Web/API/Prompt_API/Adding_context",
+        "/docs/Web/API/Prompt_API/Preserving_sessions",
+        "/docs/Web/API/Prompt_API/Multimodal"
+      ],
+      "interfaces": ["CreateMonitor", "LanguageModel"],
+      "methods": [],
+      "properties": [],
+      "events": []
+    },
     "Push API": {
       "overview": ["Push API"],
       "guides": ["/docs/Web/API/Push_API/Best_Practices"],
@@ -1480,18 +1518,15 @@
         "CropTarget",
         "RestrictionTarget"
       ],
-      "methods": ["MediaDevices.getDisplayMedia()"],
+      "methods": [
+        "MediaDevices.getDisplayMedia()",
+        "MediaDevices.getSupportedConstraints()",
+        "MediaStreamTrack.getSettings()"
+      ],
       "properties": [
         "MediaTrackConstraints.displaySurface",
         "MediaTrackConstraints.logicalSurface",
-        "MediaTrackConstraints.suppressLocalAudioPlayback",
-        "MediaTrackSettings.cursor",
-        "MediaTrackSettings.displaySurface",
-        "MediaTrackSettings.logicalSurface",
-        "MediaTrackSettings.suppressLocalAudioPlayback",
-        "MediaTrackSupportedConstraints.displaySurface",
-        "MediaTrackSupportedConstraints.logicalSurface",
-        "MediaTrackSupportedConstraints.suppressLocalAudioPlayback"
+        "MediaTrackConstraints.suppressLocalAudioPlayback"
       ],
       "events": []
     },
@@ -2215,7 +2250,18 @@
         "ANGLE_instanced_arrays",
         "EXT_blend_minmax",
         "EXT_disjoint_timer_query",
-        "OES_draw_buffers_indexed"
+        "OES_draw_buffers_indexed",
+        "EXT_color_buffer_float",
+        "EXT_float_blend",
+        "EXT_texture_compression_bptc",
+        "EXT_texture_compression_rgtc",
+        "EXT_texture_norm16",
+        "KHR_parallel_shader_compile",
+        "OES_fbo_render_mipmap",
+        "OVR_multiview2",
+        "WEBGL_compressed_texture_astc",
+        "WEBGL_compressed_texture_etc",
+        "WEBGL_multi_draw"
       ],
       "methods": [],
       "properties": [],

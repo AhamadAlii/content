@@ -38,7 +38,7 @@ row-rule-visibility-items: normal;
     <p>Two fish</p>
     <p>Red fish</p>
     <p>Blue fish</p>
-    <cite>-- Dr. Seuss<cite>
+    <cite>-- Dr. Seuss</cite>
   </section>
 </section>
 ```
@@ -60,7 +60,7 @@ cite {
 ## Syntax
 
 ```css
-/* Keywords */
+/* Keyword values */
 row-rule-visibility-items: all;
 row-rule-visibility-items: around;
 row-rule-visibility-items: between;
@@ -75,6 +75,8 @@ row-rule-visibility-items: unset;
 ```
 
 ### Values
+
+This property is specified as one of the following keyword values:
 
 - `all`
   - : The row rule should be painted in all gap segments, regardless of whether adjacent areas contain an item.
@@ -92,7 +94,7 @@ row-rule-visibility-items: unset;
 
 The `row-rule-visibility-items` property defines whether, in [multi-column](/en-US/docs/Web/CSS/Guides/Multicol_layout) and [grid](/en-US/docs/Web/CSS/Guides/Grid_layout) containers with more than one row, row rule segments are painted in the gaps between two adjacent areas if one or both of the areas are empty.
 
-The `row-rule-visibility-items` and {{cssxref("row-rule-visibility-items")}} properties can both be set to the same values using the {{cssxref("rule-visibility-items")}} shorthand.
+The `row-rule-visibility-items` and {{cssxref("column-rule-visibility-items")}} properties can both be set to the same values using the {{cssxref("rule-visibility-items")}} shorthand.
 
 ## Formal definition
 

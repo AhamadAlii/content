@@ -14,11 +14,15 @@ This event is not cancelable and does not bubble.
 
 ## Syntax
 
-Use the event name in methods like {{domxref("EventTarget.addEventListener", "addEventListener()")}}, or set an event handler property.
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
 
 ```js-nolint
 addEventListener("error", (event) => { })
+```
 
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
 onerror = (event) => { }
 ```
 
@@ -27,13 +31,6 @@ onerror = (event) => { }
 A {{domxref("MediaRecorderErrorEvent")}}. Inherits from {{domxref("Event")}}.
 
 {{InheritanceDiagram("MediaRecorderErrorEvent")}}
-
-## Event properties
-
-_Inherits properties from its parent interface, {{domxref("Event")}}_.
-
-- {{domxref("MediaRecorderErrorEvent.error", "error")}} {{ReadOnlyInline}}
-  - : A {{domxref("DOMException")}} containing information about the error that occurred.
 
 ## Description
 
@@ -71,7 +68,7 @@ async function record() {
 record();
 ```
 
-The same, but using the `onerror` event handler property:
+The same, but using the `onerror` event handler property (but note that this replaces other event listeners added using `onerror`, if any):
 
 ```js
 async function record() {

@@ -10,15 +10,17 @@ browser-compat: api.Element.animationcancel_event
 
 The **`animationcancel`** event is fired when a [CSS Animation](/en-US/docs/Web/CSS/Guides/Animations) unexpectedly aborts. In other words, any time it stops running without sending an {{domxref("Element/animationend_event", "animationend")}} event. This might happen when the {{cssxref("animation-name")}} is changed such that the animation is removed, or when the animating node is hidden using CSS. Therefore, either directly or because any of its containing nodes are hidden.
 
-An event handler for this event can be added by setting the `onanimationcancel` property, or using {{domxref("EventTarget.addEventListener", "addEventListener()")}}.
-
 ## Syntax
 
-Use the event name in methods like {{domxref("EventTarget.addEventListener", "addEventListener()")}}, or set an event handler property.
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
 
 ```js-nolint
 addEventListener("animationcancel", (event) => { })
+```
 
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
 onanimationcancel = (event) => { }
 ```
 
@@ -27,17 +29,6 @@ onanimationcancel = (event) => { }
 An {{domxref("AnimationEvent")}}. Inherits from {{domxref("Event")}}.
 
 {{InheritanceDiagram("AnimationEvent")}}
-
-## Event properties
-
-_Also inherits properties from its parent {{domxref("Event")}}_.
-
-- {{domxref("AnimationEvent.animationName")}} {{ReadOnlyInline}}
-  - : A string containing the value of the {{cssxref("animation-name")}} that generated the animation.
-- {{domxref("AnimationEvent.elapsedTime")}} {{ReadOnlyInline}}
-  - : A `float` giving the amount of time the animation has been running, in seconds, when this event fired, excluding any time the animation was paused. For an `animationstart` event, `elapsedTime` is `0.0` unless there was a negative value for {{cssxref("animation-delay")}}, in which case the event will be fired with `elapsedTime` containing `(-1 * delay)`.
-- {{domxref("AnimationEvent.pseudoElement")}} {{ReadOnlyInline}}
-  - : A string, starting with `'::'`, containing the name of the [pseudo-element](/en-US/docs/Web/CSS/Reference/Selectors/Pseudo-elements) the animation runs on. If the animation doesn't run on a pseudo-element but on the element, an empty string: `''`.
 
 ## Examples
 
@@ -53,7 +44,7 @@ animated.addEventListener("animationcancel", () => {
 animated.style.display = "none";
 ```
 
-The same, but using the `onanimationcancel` property instead of `addEventListener()`:
+The same, but using the `onanimationcancel` property instead of `addEventListener()` (but note that this replaces other event listeners added using `onanimationcancel`, if any):
 
 ```js
 const animated = document.querySelector(".animated");

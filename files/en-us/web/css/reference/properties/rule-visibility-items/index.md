@@ -11,7 +11,7 @@ sidebar: cssref
 
 {{SeeCompatTable}}
 
-The **`rule-visibility-items`** [CSS](/en-US/docs/Web/CSS) shorthand property defines whether rule segments are painted in both row and column gaps adjacent to empty areas.
+The **`rule-visibility-items`** [CSS](/en-US/docs/Web/CSS) [shorthand](/en-US/docs/Web/CSS/Guides/Cascade/Shorthand_properties) property defines whether rule segments are painted in both row and column gaps adjacent to empty areas.
 
 ## Constituent properties
 
@@ -45,7 +45,7 @@ rule-visibility-items: normal;
     <p>Two fish</p>
     <p>Red fish</p>
     <p>Blue fish</p>
-    <cite>-- Dr. Seuss<cite>
+    <cite>-- Dr. Seuss</cite>
   </section>
 </section>
 ```
@@ -67,7 +67,7 @@ cite {
 ## Syntax
 
 ```css
-/* Keywords */
+/* Keyword values */
 rule-visibility-items: all;
 rule-visibility-items: around;
 rule-visibility-items: between;
@@ -83,11 +83,13 @@ rule-visibility-items: unset;
 
 ### Values
 
+This property is specified as one of the following keyword values:
+
 - `all`
   - : Rules should be painted in all gap segments, regardless of whether adjacent areas contain an item.
 
 - `around`
-  - : A rule should be painted in a gap segment if at least one of the two adjacent areas is occupied by a item.
+  - : A rule should be painted in a gap segment if at least one of the two adjacent areas is occupied by an item.
 
 - `between`
   - : A rule should be painted in a gap segment only if both adjacent areas are occupied by items.
@@ -173,7 +175,7 @@ li {
 
 #### Result
 
-{{EmbedLiveSample("Basic", "", "230")}}
+{{EmbedLiveSample("Basic", "", "380")}}
 
 ## Specifications
 

@@ -16,11 +16,15 @@ This event is not cancelable.
 
 ## Syntax
 
-Use the event name in methods like {{domxref("EventTarget.addEventListener", "addEventListener()")}}, or set an event handler property.
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
 
 ```js-nolint
 addEventListener("transitionend", (event) => { })
+```
 
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
 ontransitionend = (event) => { }
 ```
 
@@ -29,17 +33,6 @@ ontransitionend = (event) => { }
 A {{domxref("TransitionEvent")}}. Inherits from {{domxref("Event")}}.
 
 {{InheritanceDiagram("TransitionEvent")}}
-
-## Event properties
-
-_Also inherits properties from its parent {{domxref("Event")}}_.
-
-- {{domxref("TransitionEvent.propertyName")}} {{ReadOnlyInline}}
-  - : A string containing the name CSS property associated with the transition.
-- {{domxref("TransitionEvent.elapsedTime")}} {{ReadOnlyInline}}
-  - : A `float` giving the amount of time the transition has been running, in seconds, when this event fired. This value is not affected by the {{cssxref("transition-delay")}} property.
-- {{domxref("TransitionEvent.pseudoElement")}} {{ReadOnlyInline}}
-  - : A string, starting with `::`, containing the name of the [pseudo-element](/en-US/docs/Web/CSS/Reference/Selectors/Pseudo-elements) the animation runs on. If the transition doesn't run on a pseudo-element but on the element, an empty string: `''`.
 
 ## Examples
 
@@ -53,7 +46,7 @@ transition.addEventListener("transitionend", () => {
 });
 ```
 
-The same, but using `ontransitionend`:
+The same, but using `ontransitionend` (but note that this replaces other event listeners added using `ontransitionend`, if any):
 
 ```js
 const transition = document.querySelector(".transition");

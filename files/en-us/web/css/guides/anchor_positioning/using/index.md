@@ -100,6 +100,9 @@ In some cases, an implicit anchor reference will be made between two elements, d
 - A {{htmlelement("select")}} element and its dropdown picker are opted into [customizable select element](/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select) functionality via the {{cssxref("appearance")}} property `base-select` value. In this case, an implicit popover-invoker relationship is created between the two, which also means they'll have an implicit anchor reference.
 
 > [!NOTE]
+> See [Popover anchor positioning](/en-US/docs/Web/API/Popover_API/Using#popover_anchor_positioning) for more information on positioning elements relative to their implicit anchors.
+
+> [!NOTE]
 > The methods above associate an anchor with an element, but they are not yet tethered. To tether them together, the positioned element needs to be positioned relative to its anchor, which is done with CSS.
 
 ### Removing an anchor association
@@ -361,6 +364,9 @@ This gives us the following result:
 
 The positioned element is `5px` below and `5px` to the right of the anchor element. If you scroll the document up and down, the positioned element maintains its position relative to the anchor element — it is fixed to the anchor element, not the viewport.
 
+> [!NOTE]
+> When positioning elements relative to [implicit anchors](#implicit_anchor_association) using `anchor()`, some additional steps are required, such as resetting default popover property values, and setting `position-anchor: auto` to opt in to the implicit association. See [Popover anchor positioning](/en-US/docs/Web/API/Popover_API/Using#popover_anchor_positioning) for more information.
+
 ### Setting a `position-area`
 
 The {{cssxref("position-area")}} property provides an alternative to the `anchor()` function for positioning elements relative to anchors. The `position-area` property works on the concept of a 3x3 grid of tiles, with the anchor element being the center tile. The `position-area` property can be used to position the anchor positioned element in any of the nine tiles, or have it span across two or three tiles.
@@ -374,7 +380,7 @@ The grid tiles are broken up into rows and columns:
 
 The dimensions of the center tile are defined by the [containing block](/en-US/docs/Web/CSS/Guides/Display/Containing_block) of the anchor element, while the distance between the center tile and the grid's outer edge is defined by the positioned element's containing block.
 
-`position-area` property values are composed of one or two values based on the row and column values described above, with spanning options available to define the region of the grid where the element should positioned.
+`position-area` property values are composed of one or two values based on the row and column values described above, with spanning options available to define the region of the grid where the element should be positioned.
 
 For example:
 

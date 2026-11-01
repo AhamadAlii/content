@@ -17,11 +17,15 @@ This event is not cancelable and does not bubble.
 
 ## Syntax
 
-Use the event name in methods like {{domxref("EventTarget.addEventListener", "addEventListener()")}}, or set an event handler property.
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
 
 ```js-nolint
 addEventListener("message", (event) => { })
+```
 
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
 onmessage = (event) => { }
 ```
 
@@ -30,21 +34,6 @@ onmessage = (event) => { }
 A {{domxref("MessageEvent")}}. Inherits from {{domxref("Event")}}.
 
 {{InheritanceDiagram("MessageEvent")}}
-
-## Event properties
-
-_Also inherits properties from its parent interface, {{domxref("Event")}}._
-
-- {{domxref("MessageEvent.data")}} {{ReadOnlyInline}}
-  - : The data sent by the message emitter.
-- {{domxref("MessageEvent.origin")}} {{ReadOnlyInline}}
-  - : A string representing the origin of the message emitter.
-- {{domxref("MessageEvent.lastEventId")}} {{ReadOnlyInline}}
-  - : A string representing a unique ID for the event.
-- {{domxref("MessageEvent.source")}} {{ReadOnlyInline}}
-  - : A reference to the message emitter, one of {{glossary("WindowProxy")}}, {{domxref("MessagePort")}}, or {{domxref("ServiceWorker")}}.
-- {{domxref("MessageEvent.ports")}} {{ReadOnlyInline}}
-  - : An array of {{domxref("MessagePort")}} objects representing the ports associated with the channel the message is being sent through (where appropriate, e.g., in channel messaging or when sending a message to a shared worker).
 
 ## Examples
 
@@ -62,7 +51,7 @@ dc.addEventListener("message", (event) => {
 
 We first create the new paragraph element and add the message data to it as a new text node. Then we append the new paragraph to the end of the document's body.
 
-You can also use an `RTCDataChannel` object's `onmessage` event handler property to set the event handler:
+You can also use an `RTCDataChannel` object's `onmessage` event handler property to set the event handler (but note that this replaces other event listeners added using `onmessage`, if any):
 
 ```js
 dc.onmessage = (event) => {

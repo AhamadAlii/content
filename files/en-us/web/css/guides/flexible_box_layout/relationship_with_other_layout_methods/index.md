@@ -55,8 +55,6 @@ The writing modes specification defines the following values of the {{cssxref("w
 
 {{EmbedLiveSample("writing-modes")}}
 
-The `sideways-rl` and `sideways-lr` have support only in Firefox currently.
-
 Note that you would not normally use CSS and the `writing-mode` property to change an entire document to another writing mode. This would be done via HTML, by adding a [`dir`](/en-US/docs/Web/HTML/Reference/Global_attributes/dir) and [`lang`](/en-US/docs/Web/HTML/Reference/Global_attributes/lang) attribute to the {{htmlelement("html")}} element to indicate the document language and default text direction. This would mean that the document would display correctly even if CSS did not load.
 
 ## Flexbox and other layout methods
@@ -225,4 +223,4 @@ As the box is removed, you cannot then use it to — for example — add a backg
 {{EmbedLiveSample("display-contents")}}
 
 > [!WARNING]
-> Some browsers incorrectly remove some elements with `display: contents` from the accessibility tree (but descendants will remain), removing those elements' semantics while maintaining their child content. This means the element itself may not be announced by screen readers. See [`display: contents`](/en-US/docs/Web/CSS/Reference/Properties/display#display_contents) and [`display: contents` considered harmful](https://ericwbailey.design/published/display-contents-considered-harmful/).
+> Some browsers incorrectly remove some elements with `display: contents` from the accessibility tree (but descendants will remain), removing those elements' semantics while maintaining their child content. This means the element itself may not be announced by screen readers. See [`display: contents`](/en-US/docs/Web/CSS/Reference/Properties/display#display_contents) and [`display: contents` considered harmful](https://ericwbailey.website/published/display-contents-considered-harmful/).

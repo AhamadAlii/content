@@ -41,7 +41,7 @@ None (`undefined`).
 
 ### Exceptions
 
-- `TypeError`
+- {{jsxref("TypeError")}}
   - : This is thrown if `options.sanitizer` is passed a:
     - {{domxref("SanitizerConfig")}} that isn't [valid](/en-US/docs/Web/API/SanitizerConfig#valid_configuration).
       For example, a configuration that includes both "allowed" and "removed" configuration settings.
@@ -74,7 +74,7 @@ For example, the following code is unsafe.
 ```js example-bad
 div.setHTML(unsafeString); // Safe
 const serializedHTML = div.innerHTML; // No longer sanitized!
-other_element.innerHTML = serializedHTML;
+otherElement.innerHTML = serializedHTML;
 ```
 
 The reason for this is that sanitization is context-aware.
@@ -86,7 +86,7 @@ This would be safe (if pointless):
 ```js example-good
 div.setHTML(unsafeString); // Safe
 const serializedHTML = div.innerHTML; // Serialized as a plain string
-other_div.setHTML(serializedHTML); // Safe — re-sanitized by setHTML()
+otherDiv.setHTML(serializedHTML); // Safe — re-sanitized by setHTML()
 ```
 
 There is a class of attacks that take advantage of this flaw, referred to as [mutation XSS](https://html.spec.whatwg.org/multipage/dynamic-markup-insertion.html#sanitizer-security-mxss).

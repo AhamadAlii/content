@@ -12,11 +12,15 @@ The **`animationiteration`** event is fired when an iteration of a [CSS Animatio
 
 ## Syntax
 
-Use the event name in methods like {{domxref("EventTarget.addEventListener", "addEventListener()")}}, or set an event handler property.
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
 
 ```js-nolint
 addEventListener("animationiteration", (event) => { })
+```
 
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
 onanimationiteration = (event) => { }
 ```
 
@@ -25,17 +29,6 @@ onanimationiteration = (event) => { }
 An {{domxref("AnimationEvent")}}. Inherits from {{domxref("Event")}}.
 
 {{InheritanceDiagram("AnimationEvent")}}
-
-## Event properties
-
-_Also inherits properties from its parent {{domxref("Event")}}_.
-
-- {{domxref("AnimationEvent.animationName")}} {{ReadOnlyInline}}
-  - : A string containing the value of the {{cssxref("animation-name")}} that generated the animation.
-- {{domxref("AnimationEvent.elapsedTime")}} {{ReadOnlyInline}}
-  - : A `float` giving the amount of time the animation has been running, in seconds, when this event fired, excluding any time the animation was paused. For an `animationstart` event, `elapsedTime` is `0.0` unless there was a negative value for {{cssxref("animation-delay")}}, in which case the event will be fired with `elapsedTime` containing `(-1 * delay)`.
-- {{domxref("AnimationEvent.pseudoElement")}} {{ReadOnlyInline}}
-  - : A string, starting with `'::'`, containing the name of the [pseudo-element](/en-US/docs/Web/CSS/Reference/Selectors/Pseudo-elements) the animation runs on. If the animation doesn't run on a pseudo-element but on the element, an empty string: `''`.
 
 ## Examples
 
@@ -52,7 +45,7 @@ animated.addEventListener("animationiteration", () => {
 });
 ```
 
-The same, but using the `onanimationiteration` event handler property:
+The same, but using the `onanimationiteration` event handler property (but note that this replaces other event listeners added using `onanimationiteration`, if any):
 
 ```js
 const animated = document.querySelector(".animated");

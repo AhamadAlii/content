@@ -17,11 +17,15 @@ This event is not cancelable and does not bubble.
 
 ## Syntax
 
-Use the event name in methods like {{domxref("EventTarget.addEventListener", "addEventListener()")}}, or set an event handler property.
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
 
 ```js-nolint
 addEventListener("datachannel", (event) => { })
+```
 
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
 ondatachannel = (event) => { }
 ```
 
@@ -30,13 +34,6 @@ ondatachannel = (event) => { }
 An {{domxref("RTCDataChannelEvent")}}. Inherits from {{domxref("Event")}}.
 
 {{InheritanceDiagram("RTCDataChannelEvent")}}
-
-## Event properties
-
-_Also inherits properties from {{DOMxRef("Event")}}._
-
-- {{DOMxRef("RTCDataChannelEvent.channel", "channel")}} {{ReadOnlyInline}}
-  - : Returns the {{domxref("RTCDataChannel")}} associated with the event.
 
 ## Examples
 
@@ -53,7 +50,7 @@ pc.addEventListener("datachannel", (ev) => {
 
 `receiveChannel` is set to the value of the event's {{domxref("RTCDataChannelEvent.channel", "channel")}} property, which specifies the `RTCDataChannel` object representing the data channel linking the remote peer to the local one.
 
-This same code can also instead use the {{domxref("RTCPeerConnection")}} interface's `ondatachannel` event handler property, like this:
+This same code can also instead use the {{domxref("RTCPeerConnection")}} interface's `ondatachannel` event handler property, like this (but note that this replaces other event listeners added using `ondatachannel`, if any):
 
 ```js
 pc.ondatachannel = (ev) => {

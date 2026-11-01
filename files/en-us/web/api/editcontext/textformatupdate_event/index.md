@@ -22,24 +22,21 @@ As a web developer, you should listen for the `textformatupdate` event and updat
 
 ## Syntax
 
-Use the event name in methods like {{domxref("EventTarget.addEventListener", "addEventListener()")}}, or set an event handler property.
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
 
 ```js-nolint
 addEventListener("textformatupdate", (event) => { })
+```
 
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
 ontextformatupdate = (event) => { }
 ```
 
 ## Event type
 
 A {{domxref("TextFormatUpdateEvent")}}. Inherits from {{domxref("Event")}}.
-
-## Event properties
-
-_In addition to the properties listed below, properties from the parent interface, {{domxref("Event")}}, are available._
-
-- {{domxref('TextFormatUpdateEvent.getTextFormats')}}
-  - : Returns the list of text formats that the IME window wants to apply to the text.
 
 ## Examples
 

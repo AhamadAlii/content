@@ -38,7 +38,7 @@ column-rule-visibility-items: normal;
     <p>Two fish</p>
     <p>Red fish</p>
     <p>Blue fish</p>
-    <cite>-- Dr. Seuss<cite>
+    <cite>-- Dr. Seuss</cite>
   </section>
 </section>
 ```
@@ -60,7 +60,7 @@ cite {
 ## Syntax
 
 ```css
-/* Keywords */
+/* Keyword values */
 column-rule-visibility-items: all;
 column-rule-visibility-items: around;
 column-rule-visibility-items: between;
@@ -76,11 +76,13 @@ column-rule-visibility-items: unset;
 
 ### Values
 
+This property is specified as one of the following keyword values:
+
 - `all`
   - : The column rule should be painted in all gap segments, regardless of whether adjacent areas contain an item.
 
 - `around`
-  - : The column rule should be painted in a gap segment if at least one of the two adjacent areas is occupied by a item.
+  - : The column rule should be painted in a gap segment if at least one of the two adjacent areas is occupied by an item.
 
 - `between`
   - : The column rule should be painted in a gap segment if both adjacent areas are occupied by items.
